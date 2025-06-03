@@ -42,8 +42,10 @@ const menuItems = [
 export default function Sidebar() {
     const [collapsed, setCollapsed] = useState(false);
     const [activePanel, setActivePanel] = useState<string | null>(null);
+    const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
 
     const handleMenuClick = (label: string) => {
+        setSelectedMenu(label); 
         if (["Discover", "Email Verifier", "Leads", "Campaigns"].includes(label)) {
             setCollapsed(true);
             setActivePanel(label);
@@ -68,8 +70,12 @@ export default function Sidebar() {
                         <button
                             key={label}
                             onClick={() => handleMenuClick(label)}
-                            className={`flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-white ${
+                            className={`flex items-center gap-3 w-full px-3 py-2 rounded ${
                                 collapsed ? "justify-center" : ""
+                                } ${
+                                selectedMenu === label
+                                    ? "bg-white text-blue-600 font-semibold rounded-xl"
+                                : "hover:bg-white text-black rounded-xl"
                             }`}
                         >
                             <Icon className="h-5 w-5 text-black" />
