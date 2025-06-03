@@ -31,6 +31,10 @@ interface SidebarProps {
     setSelectedMenu: (label: string) => void;
     selectedSubmenu: string | null;
     setSelectedSubmenu: (label: string | null) => void;
+    collapsed: boolean;
+    setCollapsed: (val: boolean) => void;
+    activePanel: string | null;
+    setActivePanel: (val: string | null) => void;
 }
 
 const groupedMenu = [
@@ -61,9 +65,7 @@ const groupedMenu = [
     },
 ];
 
-export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu, setSelectedSubmenu}: SidebarProps) {
-    const [collapsed, setCollapsed] = useState(false);
-    const [activePanel, setActivePanel] = useState<string | null>(null);
+export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu, setSelectedSubmenu, collapsed, setCollapsed, activePanel, setActivePanel}: SidebarProps) {
 
     const [submenuMemory, setSubmenuMemory] = useState<Record<string, string>>({});
 
@@ -89,7 +91,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                     "Leads": "Companies",
                     "Campaigns": "Campaigns",
                 };
-                setSelectedSubmenu(defaultFirstSub[label as keyof typeof defaultFirstSub]);
+                setSelectedSubmenu(lastSub || defaultFirstSub[label as keyof typeof defaultFirstSub]);
             }
 
         } else {
@@ -101,7 +103,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
 
 
     return (
-        <div className="relative flex">
+        <div className="flex">
 
             {/* Sidebar */}
             <div className={`h-screen ${collapsed ? "w-20" : "w-64"} text-gray-800 bg-[#F8F8F8] p-3 flex flex-col transition-all duration-300`}>
@@ -164,7 +166,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
 
             {/* Floating Panels */}
             {activePanel === "Discover" && (
-                <div className="absolute left-20 top-0 h-screen text-gray-800 w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
+                <div className="h-screen text-gray-800 w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
                     <h2 className="text-lg font-semibold mb-4">Discover</h2>
                     <div className="space-y-2">
                         <button
@@ -196,7 +198,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
             )}
 
             {activePanel === "Email Verifier" && (
-                <div className="absolute left-20 text-gray-800 top-0 h-screen w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
+                <div className="text-gray-800 top-0 h-screen w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
                     <h2 className="text-lg font-semibold mb-4">Email Verifier</h2>
                     <div className="space-y-2">
                         <button 
@@ -228,7 +230,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
             )}
 
             {activePanel === "Leads" && (
-                <div className="absolute left-20 top- text-gray-800 h-screen w-64 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10 overflow-y-auto">
+                <div className="top- text-gray-800 h-screen w-64 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10 overflow-y-auto">
                     <h2 className="text-lg font-semibold mb-4">Leads</h2>
 
                     {/* Companies Section */}
@@ -242,12 +244,12 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </div>
                         <button 
                             onClick={() => {
-                                setSelectedSubmenu("Companies");
-                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Companies" }));
+                                setSelectedSubmenu("LeadsCompanies");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "LeadsCompanies" }));
                             }}
 
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
-                                ${selectedSubmenu === "Companies" ? "bg-white text-blue-600" : "text-gray-800"}`}
+                                ${selectedSubmenu === "LeadsCompanies" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
                             <BuildingOffice2Icon className="h-4 w-4" />
                             Companies
@@ -272,10 +274,10 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </div>
                         <div className="pl-4 space-y-1">
                             <button 
-onClick={() => {
-  setSelectedSubmenu("Inbox");
-  setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Inbox" }));
-}}
+                                onClick={() => {
+                                    setSelectedSubmenu("All People");
+                                    setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "All People" }));
+                                }}
 
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                     ${selectedSubmenu === "All People" ? "bg-white text-blue-600" : "text-gray-800"}`}
@@ -333,7 +335,7 @@ onClick={() => {
             )}
 
             {activePanel === "Campaigns" && (
-                <div className="absolute left-20 top-0 text-gray-800 h-screen w-64 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
+                <div className="text-gray-800 h-screen w-64 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
                     <h2 className="text-lg font-semibold mb-4">Campaigns</h2>
 
                     <div className="space-y-2">
@@ -405,12 +407,12 @@ onClick={() => {
 
                         <button 
                             onClick={() => {
-                                setSelectedSubmenu("Settings");
-                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Settings" }));
+                                setSelectedSubmenu("CampaignSettings");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "CampaignSettings" }));
                             }}
 
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
-                                ${selectedSubmenu === "Settings" ? "bg-white text-blue-600" : "text-gray-800"}`}
+                                ${selectedSubmenu === "CampaignSettings" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
                             <Cog6ToothIcon className="h-5 w-5" />
                             Settings
