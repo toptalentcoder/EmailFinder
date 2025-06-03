@@ -2,11 +2,36 @@
 
 import { useState } from "react";
 import Sidebar from "@/components/common/Sidebar";
+import DashboardMenu from "./dashboardMenu/page";
+import LeadScraperPage from "./leadScraper/page";
+import PeoplePage from "./discover/people/page";
+import CompaniesPage from "./discover/companies/page";
+import EmailFinderPage from "./emailFinder/page";
+import BulkVerificationPage from "./emailVerifier/bulkVerification/page";
+import SingleVerificationPage from "./emailVerifier/singleVerification/page";
+import UpdatesPage from "./updates/page";
+import LeadsCompaniesPage from "./leads/companies/page";
+import AllpeoplePage from "./leads/people/allPeople/page";
+import ImportFromCompaniesPage from "./leads/people/importFromCompanies/page";
+import JosiesLeadsPage from "./leads/people/josiesLeads/page";
+import CampaignsPage from "./campaigns/campaigns/page";
+import EngagementPage from "./campaigns/engagement/page";
+import InboxPage from "./campaigns/inbox/page";
+import QueuePage from "./campaigns/queue/page";
+import ReportingPage from "./campaigns/reporting/page";
+import CampaginSettingsPage from "./campaigns/settings/page";
+import TemplatesPage from "./campaigns/templates/page";
+import UnsubscriptionsPage from "./campaigns/unsubscriptions/page";
+import IntegrationPage from "./integration/page";
+import APIPage from "./api/page";
 
 export default function Dashboard(){
 
     const [selectedMenu, setSelectedMenu] = useState("Dashboard");
     const [selectedSubmenu, setSelectedSubmenu] = useState<string | null>(null);
+
+    const [collapsed, setCollapsed] = useState(false); 
+    const [activePanel, setActivePanel] = useState<string | null>(null);
 
     return(
         <div className="flex">
@@ -15,33 +40,46 @@ export default function Dashboard(){
                 setSelectedMenu={setSelectedMenu}
                 selectedSubmenu={selectedSubmenu}
                 setSelectedSubmenu={setSelectedSubmenu}
+                collapsed={collapsed}
+                setCollapsed={setCollapsed}
+                activePanel={activePanel}
+                setActivePanel={setActivePanel}
             />
 
             <div className="flex-1 p-8 bg-white">
 
                 {/* Pages for floating submenus */}
-                {selectedSubmenu === "People" && <h1>People Page</h1>}
-                {selectedSubmenu === "Companies" && <h1>Companies Page</h1>}
-                {selectedSubmenu === "All People" && <h1>All People Page</h1>}
-                {selectedSubmenu === "Import from Companies" && <h1>Import from Companies Page</h1>}
-                {selectedSubmenu === "Josie’s Leads" && <h1>Josie’s Leads Page</h1>}
-                {selectedSubmenu === "Single Verification" && <h1>Single Email Verification Page</h1>}
-                {selectedSubmenu === "Bulk Verification" && <h1>Bulk Email Verification Page</h1>}
-                {selectedSubmenu === "Campaigns" && <h1>Campaigns Page</h1>}
-                {selectedSubmenu === "Inbox" && <h1>Inbox Page</h1>}
-                {selectedSubmenu === "Engagement" && <h1>Engagement Page</h1>}
-                {selectedSubmenu === "Reporting" && <h1>Reporting Page</h1>}
-                {selectedSubmenu === "Queue" && <h1>Queue Page</h1>}
-                {selectedSubmenu === "Templates" && <h1>Templates Page</h1>}
-                {selectedSubmenu === "Unsubscriptions" && <h1>Unsubscriptions Page</h1>}
+                {selectedSubmenu === "People" && (
+                    <PeoplePage
+                        togglePanel={() =>
+                        setActivePanel(activePanel ? null : selectedMenu) // 💡 toggle only panel
+                        }
+                    />
+                )}
+
+                {selectedSubmenu === "Companies" && <CompaniesPage/>}
+                {selectedSubmenu === "LeadsCompanies" && <LeadsCompaniesPage/>}
+                {selectedSubmenu === "All People" && <AllpeoplePage/>}
+                {selectedSubmenu === "Import from Companies" && <ImportFromCompaniesPage/>}
+                {selectedSubmenu === "Josie’s Leads" && <JosiesLeadsPage/>}
+                {selectedSubmenu === "Single Verification" && <SingleVerificationPage/>}
+                {selectedSubmenu === "Bulk Verification" && <BulkVerificationPage/>}
+                {selectedSubmenu === "Campaigns" && <CampaignsPage/>}
+                {selectedSubmenu === "Inbox" && <InboxPage/>}
+                {selectedSubmenu === "Engagement" && <EngagementPage/>}
+                {selectedSubmenu === "Reporting" && <ReportingPage/>}
+                {selectedSubmenu === "Queue" && <QueuePage/>}
+                {selectedSubmenu === "CampaignSettings" && <CampaginSettingsPage/>}
+                {selectedSubmenu === "Templates" && <TemplatesPage/>}
+                {selectedSubmenu === "Unsubscriptions" && <UnsubscriptionsPage/>}
 
                 {/* Pages for main menu */}
-                {selectedMenu === "Dashboard" && <h1>Dashboard Page</h1>}
-                {selectedMenu === "Lead Scraper" && <h1>Lead Scraper Page</h1>}
-                {selectedMenu === "Email Finder" && <h1>Email Finder Page</h1>}
-                {selectedMenu === "Updates" && <h1>Updates Page</h1>}
-                {selectedMenu === "Integration" && <h1>Integration Page</h1>}
-                {selectedMenu === "API" && <h1>API Page</h1>}
+                {selectedMenu === "Dashboard" && <DashboardMenu collapsed={collapsed} setCollapsed={setCollapsed} />}
+                {selectedMenu === "Lead Scraper" && <LeadScraperPage />}
+                {selectedMenu === "Email Finder" && <EmailFinderPage/>}
+                {selectedMenu === "Updates" && <UpdatesPage/>}
+                {selectedMenu === "Integration" && <IntegrationPage/>}
+                {selectedMenu === "API" && <APIPage/>}
 
             </div>
 
