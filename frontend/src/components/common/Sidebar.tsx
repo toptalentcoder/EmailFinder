@@ -65,18 +65,40 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
     const [collapsed, setCollapsed] = useState(false);
     const [activePanel, setActivePanel] = useState<string | null>(null);
 
-    const handleMenuClick = (label: string) => {
-        setSelectedMenu(label); 
-        setSelectedSubmenu(null); // Reset submenu when main menu is clicked
+    const [submenuMemory, setSubmenuMemory] = useState<Record<string, string>>({});
 
-        if (["Discover", "Email Verifier", "Leads", "Campaigns"].includes(label)) {
+
+    const handleMenuClick = (label: string) => {
+        setSelectedMenu(label);
+
+        const hasSubmenu = ["Discover", "Email Verifier", "Leads", "Campaigns"].includes(label);
+
+        if (hasSubmenu) {
             setCollapsed(true);
             setActivePanel(label);
+
+            // Restore previous submenu or pick default
+            const lastSub = submenuMemory[label];
+            if (lastSub) {
+                setSelectedSubmenu(lastSub);
+            } else {
+                // Select the first submenu item by default
+                const defaultFirstSub = {
+                    "Discover": "People",
+                    "Email Verifier": "Single Verification",
+                    "Leads": "Companies",
+                    "Campaigns": "Campaigns",
+                };
+                setSelectedSubmenu(defaultFirstSub[label as keyof typeof defaultFirstSub]);
+            }
+
         } else {
             setCollapsed(false);
             setActivePanel(null);
+            setSelectedSubmenu(null);
         }
     };
+
 
     return (
         <div className="relative flex">
@@ -146,7 +168,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                     <h2 className="text-lg font-semibold mb-4">Discover</h2>
                     <div className="space-y-2">
                         <button
-                            onClick={() => setSelectedSubmenu("People")}
+                            onClick={() => {
+                                setSelectedSubmenu("People");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "People" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "People" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -154,7 +180,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                             People
                         </button>
                         <button
-                            onClick={() => setSelectedSubmenu("Companies")}
+                            onClick={() => {
+                                setSelectedSubmenu("Companies");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Companies" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Companies" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -170,7 +200,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                     <h2 className="text-lg font-semibold mb-4">Email Verifier</h2>
                     <div className="space-y-2">
                         <button 
-                            onClick={() => setSelectedSubmenu("Single Verification")}
+                            onClick={() => {
+                                setSelectedSubmenu("Single Verification");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Single Verification" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Single Verification" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -178,7 +212,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                             Single Verification
                         </button>
                         <button 
-                            onClick={() => setSelectedSubmenu("Bulk Verification")}
+                            onClick={() => {
+                                setSelectedSubmenu("Bulk Verification");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Bulk Verification" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Bulk Verification" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -203,7 +241,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                             <span className="text-xs text-gray-500">1</span>
                         </div>
                         <button 
-                            onClick={() => setSelectedSubmenu("Companies")}
+                            onClick={() => {
+                                setSelectedSubmenu("Companies");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Companies" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Companies" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -230,21 +272,33 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </div>
                         <div className="pl-4 space-y-1">
                             <button 
-                                onClick={() => setSelectedSubmenu("All People")}
+onClick={() => {
+  setSelectedSubmenu("Inbox");
+  setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Inbox" }));
+}}
+
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                     ${selectedSubmenu === "All People" ? "bg-white text-blue-600" : "text-gray-800"}`}
                             >
                                 All People <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">6</span>
                             </button>
                             <button 
-                                onClick={() => setSelectedSubmenu("Import from Companies")}
+                                onClick={() => {
+                                    setSelectedSubmenu("Import from Companies");
+                                    setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Import from Companies" }));
+                                }}
+
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                     ${selectedSubmenu === "Import from Companies" ? "bg-white text-blue-600" : "text-gray-800"}`}
                             >
                                 Import from Com.. <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">3</span>
                             </button>
                             <button 
-                                onClick={() => setSelectedSubmenu("Josie’s Leads")}
+                                onClick={() => {
+                                    setSelectedSubmenu("Josie’s Leads");
+                                    setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Josie’s Leads" }));
+                                }}
+
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                     ${selectedSubmenu === "Josie’s Leads" ? "bg-white text-blue-600" : "text-gray-800"}`}
                             >
@@ -284,7 +338,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
 
                     <div className="space-y-2">
                         <button 
-                            onClick={() => setSelectedSubmenu("Campaigns")}
+                            onClick={() => {
+                                setSelectedSubmenu("Campaigns");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Campaigns" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Campaigns" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -293,7 +351,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button 
-                            onClick={() => setSelectedSubmenu("Inbox")}
+                            onClick={() => {
+                                setSelectedSubmenu("Inbox");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Inbox" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Inbox" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -303,7 +365,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button 
-                            onClick={() => setSelectedSubmenu("Engagement")}
+                            onClick={() => {
+                                setSelectedSubmenu("Engagement");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Engagement" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Engagement" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -312,7 +378,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button 
-                            onClick={() => setSelectedSubmenu("Reporting")}
+                            onClick={() => {
+                                setSelectedSubmenu("Reporting");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Reporting" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Reporting" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -321,7 +391,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button 
-                            onClick={() => setSelectedSubmenu("Queue")}
+                            onClick={() => {
+                                setSelectedSubmenu("Queue");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Queue" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Queue" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -330,7 +404,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button 
-                            onClick={() => setSelectedSubmenu("Settings")}
+                            onClick={() => {
+                                setSelectedSubmenu("Settings");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Settings" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Settings" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -339,7 +417,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button
-                            onClick={() => setSelectedSubmenu("Templates")}
+                            onClick={() => {
+                                setSelectedSubmenu("Templates");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Templates" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Templates" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
@@ -348,7 +430,11 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                         </button>
 
                         <button
-                            onClick={() => setSelectedSubmenu("Unsubscriptions")}
+                            onClick={() => {
+                                setSelectedSubmenu("Unsubscriptions");
+                                setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Unsubscriptions" }));
+                            }}
+
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-medium w-full hover:bg-white 
                                 ${selectedSubmenu === "Unsubscriptions" ? "bg-white text-blue-600" : "text-gray-800"}`}
                         >
