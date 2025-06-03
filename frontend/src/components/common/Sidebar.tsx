@@ -26,17 +26,32 @@ import {
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
 
-const menuItems = [
-  { label: "Dashboard", icon: HomeIcon },
-  { label: "Lead Scraper", icon: BuildingOfficeIcon },
-  { label: "Discover", icon: MagnifyingGlassIcon },
-  { label: "Email Finder", icon: EnvelopeIcon },
-  { label: "Email Verifier", icon: CheckBadgeIcon },
-  { label: "Updates", icon: WifiIcon },
-  { label: "Leads", icon: UsersIcon },
-  { label: "Campaigns", icon: MegaphoneIcon },
-  { label: "Integration", icon: Cog6ToothIcon },
-  { label: "API", icon: CodeBracketSquareIcon },
+const groupedMenu = [
+    {
+        title: "Menu",
+        items: [{ label: "Dashboard", icon: HomeIcon }],
+    },
+    {
+        items: [
+            { label: "Lead Scraper", icon: BuildingOfficeIcon },
+            { label: "Discover", icon: MagnifyingGlassIcon },
+            { label: "Email Finder", icon: EnvelopeIcon },
+            { label: "Email Verifier", icon: CheckBadgeIcon },
+            { label: "Updates", icon: WifiIcon },
+        ],
+    },
+    {
+        items: [
+            { label: "Leads", icon: UsersIcon },
+            { label: "Campaigns", icon: MegaphoneIcon },
+        ],
+    },
+    {
+        items: [
+            { label: "Integration", icon: Cog6ToothIcon },
+            { label: "API", icon: CodeBracketSquareIcon },
+        ],
+    },
 ];
 
 export default function Sidebar() {
@@ -60,31 +75,46 @@ export default function Sidebar() {
 
             {/* Sidebar */}
             <div className={`h-screen ${collapsed ? "w-20" : "w-64"} text-gray-800 bg-gray-100 p-3 flex flex-col transition-all duration-300`}>
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-center gap-2 mb-6 ml-4">
                     <div className="h-6 w-6 rounded-full bg-blue-600" />
                     {!collapsed && <h1 className="text-lg font-bold">Caitalyst</h1>}
                 </div>
 
-                <div className="flex-1 space-y-1">
-                    {menuItems.map(({ label, icon: Icon }) => (
-                        <button
-                            key={label}
-                            onClick={() => handleMenuClick(label)}
-                            className={`flex items-center gap-3 w-full px-3 py-2 rounded ${
-                                collapsed ? "justify-center" : ""
-                                } ${
-                                selectedMenu === label
-                                    ? "bg-white text-blue-600 font-semibold rounded-xl"
-                                : "hover:bg-white text-black rounded-xl"
-                            }`}
-                        >
-                            <Icon className="h-5 w-5 text-black" />
-                            {!collapsed && <span className="text-sm font-medium">{label}</span>}
-                        </button>
+                <div className="flex-1 space-y-6 overflow-y-auto">
+                    {groupedMenu.map((group, groupIdx) => (
+                        <div key={groupIdx}>
+                            {group.title && (
+                                <p className="text-xs text-gray-500 font-medium mb-1 px-3">{group.title}</p>
+                            )}
+
+                            {group.items.map(({ label, icon: Icon }) => (
+                                <button
+                                    key={label}
+                                    onClick={() => handleMenuClick(label)}
+                                    className={`flex items-center gap-3 w-full px-3 py-2 rounded-xl ${
+                                        collapsed ? "justify-center" : ""
+                                    } ${
+                                        selectedMenu === label
+                                        ? "bg-white text-blue-600 font-semibold"
+                                        : "hover:bg-white text-black"
+                                    }`}
+                                >
+                                    <Icon
+                                        className={`h-5 w-5 ${
+                                        selectedMenu === label ? "text-blue-600" : "text-black"
+                                        }`}
+                                    />
+                                    {!collapsed && <span className="text-sm font-medium">{label}</span>}
+                                </button>
+                            ))}
+
+                            {groupIdx !== groupedMenu.length - 1 && <hr className="my-3 border-gray-200" />}
+                        </div>
                     ))}
                 </div>
 
-                <div className="mt-auto space-y-1">
+                {/* Footer */}
+                <div className="space-y-1 pt-4 border-t border-gray-200">
                     <button className={`flex items-center gap-3 px-3 py-2 w-full hover:bg-white ${collapsed ? "justify-center" : ""}`}>
                         <BellIcon className="h-5 w-5" />
                         {!collapsed && <span>Notification</span>}
@@ -96,8 +126,10 @@ export default function Sidebar() {
                     <div className={`flex items-center gap-3 px-3 py-2 ${collapsed ? "justify-center" : ""}`}>
                         <div className="h-6 w-6 rounded-full bg-yellow-600" />
                         {!collapsed && <span>Sidiat Bruma</span>}
+                        {collapsed && <span className="ml-1">›</span>}
                     </div>
                 </div>
+
             </div>
 
             {/* Floating Panels */}
