@@ -2,28 +2,28 @@
 
 import { useState } from "react";
 import {
-  HomeIcon,
-  BuildingOfficeIcon,
-  MagnifyingGlassIcon,
-  EnvelopeIcon,
-  CheckBadgeIcon,
-  WifiIcon,
-  UsersIcon,
-  MegaphoneIcon,
-  Cog6ToothIcon,
-  CodeBracketSquareIcon,
-  BellIcon,
-  QuestionMarkCircleIcon,
-  UserGroupIcon,
-  BuildingOffice2Icon,
-  InboxIcon,
-  RectangleStackIcon,
-  Cog8ToothIcon,
-  PlusIcon,
-  ChartBarIcon,
-  QueueListIcon,
-  DocumentDuplicateIcon,
-  AdjustmentsHorizontalIcon,
+    HomeIcon,
+    BuildingOfficeIcon,
+    MagnifyingGlassIcon,
+    EnvelopeIcon,
+    CheckBadgeIcon,
+    WifiIcon,
+    UsersIcon,
+    MegaphoneIcon,
+    Cog6ToothIcon,
+    CodeBracketSquareIcon,
+    BellIcon,
+    QuestionMarkCircleIcon,
+    UserGroupIcon,
+    BuildingOffice2Icon,
+    InboxIcon,
+    RectangleStackIcon,
+    Cog8ToothIcon,
+    PlusIcon,
+    ChartBarIcon,
+    QueueListIcon,
+    DocumentDuplicateIcon,
+    AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
 
 interface SidebarProps {
@@ -166,7 +166,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
 
             {/* Floating Panels */}
             {activePanel === "Discover" && (
-                <div className="h-screen text-gray-800 w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
+                <div className="min-h-screen text-gray-800 w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
                     <h2 className="text-lg font-semibold mb-4">Discover</h2>
                     <div className="space-y-2">
                         <button
@@ -201,7 +201,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                 <div className="text-gray-800 top-0 h-screen w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
                     <h2 className="text-lg font-semibold mb-4">Email Verifier</h2>
                     <div className="space-y-2">
-                        <button 
+                        <button
                             onClick={() => {
                                 setSelectedSubmenu("Single Verification");
                                 setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Single Verification" }));
@@ -213,7 +213,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
                             <InboxIcon className="h-5 w-5" />
                             Single Verification
                         </button>
-                        <button 
+                        <button
                             onClick={() => {
                                 setSelectedSubmenu("Bulk Verification");
                                 setSubmenuMemory(prev => ({ ...prev, [activePanel!]: "Bulk Verification" }));

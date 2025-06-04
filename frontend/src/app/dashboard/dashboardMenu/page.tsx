@@ -62,8 +62,8 @@ export default function DashboardMenu({
                             ["Lead Founds", 2543, "w-9/12", "bg-blue-600"],
                             ["Contact Info", 2102, "w-8/12", "bg-blue-500"],
                             ["Verified Emails", 1432, "w-7/12", "bg-blue-400"],
-                            ["Enriched", 987, "w-5/12", "bg-blue-300"],
-                            ["Qualified", 645, "w-3/12", "bg-blue-200"],
+                            ["Enriched", 987, "w-6/12", "bg-blue-300"],
+                            ["Qualified", 645, "w-5/12", "bg-blue-200"],
                         ].map(([label, count, width, bg]) => (
                             <div
                                 key={label}
