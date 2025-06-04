@@ -46,7 +46,7 @@ export default function Dashboard(){
                 setActivePanel={setActivePanel}
             />
 
-            <div className="flex-1 p-8 bg-white">
+            <div className="flex-1 bg-white">
 
                 {/* Pages for floating submenus */}
                 {selectedSubmenu === "People" && (

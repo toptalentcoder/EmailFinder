@@ -8,6 +8,7 @@ import { CgViewComfortable } from "react-icons/cg";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
+import SideFilterbar from "./SideFilter";
 
 interface PeoplePageProps {
   togglePanel: () => void;
@@ -34,7 +35,7 @@ export default function PeoplePage({ togglePanel }: PeoplePageProps) {
     <div className="min-h-screen text-sm text-gray-800 font-sans">
 
       {/* Header with Collapse Button */}
-      <div className="flex items-center mb-4">
+      <div className="flex items-center mb-4 mt-8 ml-8">
         {collapsed ? (
           <TbLayoutSidebarRightCollapseFilled
             className="w-6 h-6 cursor-pointer"
@@ -50,7 +51,7 @@ export default function PeoplePage({ togglePanel }: PeoplePageProps) {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 ml-8 mr-8">
           <div className="flex items-center gap-2">
             <Menu>
               <MenuButton>
@@ -165,41 +166,13 @@ export default function PeoplePage({ togglePanel }: PeoplePageProps) {
 
         <div className="flex-1 flex">
           {/* Sidebar Filter */}
-          <aside className="w-64 bg-white border-r border-gray-200 p-4 space-y-3">
-            {[
-              "Company Name",
-              "Industry",
-              "Job Title",
-              "Location",
-              "Company Size",
-              "Company Type",
-              "Founded",
-              "Keywords",
-              "Technologies",
-              "Funding",
-              "First Name",
-              "Last Name",
-            ].map((label) => (
-              <div key={label} className="flex justify-between items-center">
-                <span>{label}</span>
-                <span className="text-xs text-gray-400">ⓘ</span>
-              </div>
-            ))}
-            <div className="pt-4">
-              <button className="bg-blue-600 text-white w-full py-2 rounded">Search</button>
-              <button className="w-full mt-2 py-2 border rounded">Clear filter</button>
-            </div>
-          </aside>
+          <SideFilterbar/>
 
           {/* Main Content */}
-          <main className="flex-1 p-6 bg-gray-50">
+          <main className="flex-1 bg-gray-50">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="text-lg font-semibold">781 People Found</div>
-              <div className="flex items-center gap-2">
-                <button className="border px-4 py-1 rounded">Save Search</button>
-                <button className="border px-4 py-1 rounded">Import ⌄</button>
-              </div>
             </div>
 
             {/* Table */}
