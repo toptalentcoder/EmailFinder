@@ -1,19 +1,249 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { TbLayoutSidebarLeftCollapseFilled } from "react-icons/tb";
+import { TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { CgViewComfortable } from "react-icons/cg";
+import { IoIosArrowDown } from "react-icons/io";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { CiSearch } from "react-icons/ci";
+
 interface PeoplePageProps {
   togglePanel: () => void;
 }
 
 export default function PeoplePage({ togglePanel }: PeoplePageProps) {
+
+  const [collapsed, setCollapsed] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+
+  const handleToggle = () => {
+    setCollapsed(prev => !prev);    // local toggle for icon display
+    togglePanel();                  // call external panel toggle
+  };
+
   return (
-    <div className="flex">
-      <div className="flex-1 p-8 bg-white">
-        <h1 className="text-black">People Page</h1>
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={togglePanel} // ✅ Toggle only panel visibility
-        >
-          Click Me
-        </button>
-        <p>This is the people page.</p>
+    <div className="min-h-screen text-sm text-gray-800 font-sans">
+
+      {/* Header with Collapse Button */}
+      <div className="flex items-center mb-4">
+        {collapsed ? (
+          <TbLayoutSidebarRightCollapseFilled
+            className="w-6 h-6 cursor-pointer"
+            onClick={handleToggle}
+          />
+        ) : (
+          <TbLayoutSidebarLeftCollapseFilled
+            className="w-6 h-6 cursor-pointer"
+            onClick={handleToggle}
+          />
+        )}
+        <h1 className="text-2xl font-semibold ml-2">People</h1>
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Menu>
+              <MenuButton>
+                <div className="flex items-center gap-2 bg-white hover:bg-gray-200 cursor-pointer border border-gray-300 rounded-lg px-3 py-1">
+                  <CgViewComfortable className="w-5 h-5 text-gray-500" />
+                  <span className="text-gray-600">Default View</span>
+                  <IoIosArrowDown/>
+                </div>
+              </MenuButton>
+              <MenuItems
+                anchor="bottom start"
+                className="[--anchor-gap:8px] [--anchor-padding:8px] rounded-lg bg-white shadow-2xl z-50 border border-gray-200 min-w-96"
+              >
+                <MenuItem>
+                  <div className="text-gray-800 px-4 py-1 hover:bg-gray-100 cursor-pointer">Saved Searches</div>
+                </MenuItem>
+                <MenuItem>
+                  <div className="flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                    <CgViewComfortable className="w-5 h-5 text-gray-500" />
+                    <span className="text-gray-800">Default View</span>
+                    <div className="bg-gray-400 rounded-2xl px-2 py-0.5">System</div>
+                  </div>
+                </MenuItem>
+                <MenuItem>
+                    <div className="flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                      <CgViewComfortable className="w-5 h-5 text-gray-500" />
+                      <span className="text-gray-800">Great Leads</span>
+                  </div>
+                </MenuItem>
+              </MenuItems>
+            </Menu>
+
+            <div className="flex items-center gap-2 bg-white hover:bg-gray-200 cursor-pointer border border-gray-300 rounded-lg px-3 py-1">
+              <HiOutlineAdjustmentsHorizontal className="w-5 h-5 text-gray-500" />
+              <span className="text-gray-600">Hide Filter</span>
+            </div>
+
+            <div
+              className="flex items-center gap-2 bg-white cursor-pointer border border-gray-300 rounded-lg px-3 py-1 min-w-52"
+              onClick={() => setIsEditing(true)}
+            >
+              <CiSearch className="w-5 h-5 text-gray-500" />
+              {isEditing ? (
+                <input
+                  ref={inputRef}
+                  type="text"
+                  className="w-full outline-none text-gray-700"
+                  placeholder="Type to search..."
+                  onBlur={() => setIsEditing(false)}
+                />
+              ) : (
+                <span className="text-gray-600">Search</span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <button
+                className="bg-white text-gray-800 border border-gray-400 px-3 py-1 rounded-l-lg cursor-pointer flex items-center space-x-3 text-sm hover:bg-gray-300"
+            >
+              <span>Save Search</span>
+            </button>
+            <Menu>
+                <MenuButton className="text-gray-200 cursor-pointer rounded-r-lg bg-white pl-3 hover:bg-gray-300 border border-gray-400">
+                    <div className='flex items-center space-x-2 text-gray-800 py-2 text-md font-medium mr-3'>
+                        <IoIosArrowDown/>
+                    </div>
+                </MenuButton>
+                <MenuItems
+                    anchor="bottom end"
+                    className="[--anchor-gap:8px] [--anchor-padding:8px] rounded-md bg-white shadow-2xl z-50 mt-2 border border-gray-200 min-w-92"
+                >
+                    <MenuItem key={"savedSearchName"} as="div">
+                        <div
+                            className="flex items-center gap-2 px-5 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault(); // prevents menu from closing
+                            }}
+                        >
+                            Saved Search name
+                        </div>
+                    </MenuItem>
+                    <MenuItem key={"SearchName"} as="div">
+                        <div
+                            className="flex items-center gap-2 px-3 py-0.5 text-sm bg-gray-100 border border-gray-400 mx-3 mb-5 rounded-lg"
+                            onClick={(e) => e.preventDefault()} // keeps menu open
+                        >
+                            <input
+                                type="text"
+                                placeholder="Choose a search name"
+                                className="w-full px-2 py-1 text-gray-700 bg-transparent outline-none"
+                            />
+                        </div>
+                    </MenuItem>
+
+                    <MenuItem key={"CreateSearch"} as="div">
+                        <div
+                            className="flex items-center gap-2 px-5 py-2 text-sm text-gray-700 justify-end"
+                            onClick={(e) => {
+                                e.preventDefault(); // prevents menu from closing
+                            }}
+                        >
+                            <div className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-3 py-1 cursor-pointer rounded-lg">Cancel</div>
+                            <div className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 cursor-pointer rounded-lg">Create Search</div>
+                        </div>
+                    </MenuItem>
+                </MenuItems>
+            </Menu>
+        </div>
+
+        </div>
+
+        <div className="flex-1 flex">
+          {/* Sidebar Filter */}
+          <aside className="w-64 bg-white border-r border-gray-200 p-4 space-y-3">
+            {[
+              "Company Name",
+              "Industry",
+              "Job Title",
+              "Location",
+              "Company Size",
+              "Company Type",
+              "Founded",
+              "Keywords",
+              "Technologies",
+              "Funding",
+              "First Name",
+              "Last Name",
+            ].map((label) => (
+              <div key={label} className="flex justify-between items-center">
+                <span>{label}</span>
+                <span className="text-xs text-gray-400">ⓘ</span>
+              </div>
+            ))}
+            <div className="pt-4">
+              <button className="bg-blue-600 text-white w-full py-2 rounded">Search</button>
+              <button className="w-full mt-2 py-2 border rounded">Clear filter</button>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1 p-6 bg-gray-50">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-lg font-semibold">781 People Found</div>
+              <div className="flex items-center gap-2">
+                <button className="border px-4 py-1 rounded">Save Search</button>
+                <button className="border px-4 py-1 rounded">Import ⌄</button>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-x-auto bg-white rounded-lg shadow">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-100 text-gray-600 text-xs uppercase">
+                  <tr>
+                    <th className="p-3 text-left">Name</th>
+                    <th className="p-3 text-left">Company</th>
+                    <th className="p-3 text-left">Job Title</th>
+                    <th className="p-3 text-left">Location</th>
+                    <th className="p-3 text-left">Email</th>
+                    <th className="p-3 text-left">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-gray-700">
+                  {Array.from({ length: 10 }).map((_, idx) => (
+                    <tr key={idx} className="border-b">
+                      <td className="p-3 flex items-center gap-2">
+                        <div className="w-5 h-5 bg-red-500 rounded-full" />
+                        Nathan Mellor
+                      </td>
+                      <td className="p-3">Starta Leadership</td>
+                      <td className="p-3">Chief Executive Officer</td>
+                      <td className="p-3">San Francisco</td>
+                      <td className="p-3">
+                        <span
+                          className={`px-2 py-1 rounded text-white text-xs ${
+                            idx % 3 === 0 ? "bg-red-500" : "bg-green-500"
+                          }`}
+                        >
+                          Access email
+                        </span>
+                      </td>
+                      <td className="p-3">
+                        <button className="text-blue-600 hover:underline">Add to Lead</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );
