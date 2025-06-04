@@ -106,7 +106,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
         <div className="flex">
 
             {/* Sidebar */}
-            <div className={`h-screen ${collapsed ? "w-20" : "w-64"} text-gray-800 bg-[#F8F8F8] p-3 flex flex-col transition-all duration-300`}>
+            <div className={`min-h-screen ${collapsed ? "w-20" : "w-64"} text-gray-800 bg-[#F8F8F8] p-3 flex flex-col transition-all duration-300`}>
                 <div className="flex items-center gap-2 mb-6 ml-4">
                     <div className="h-6 w-6 rounded-full bg-blue-600" />
                     {!collapsed && <h1 className="text-lg font-bold">Caitalyst</h1>}
