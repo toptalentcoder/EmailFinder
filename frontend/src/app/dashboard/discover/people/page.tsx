@@ -9,6 +9,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import SideFilterbar from "./SideFilter";
+import MainContent from "./MainContent";
 
 interface PeoplePageProps {
   togglePanel: () => void;
@@ -169,53 +170,7 @@ export default function PeoplePage({ togglePanel }: PeoplePageProps) {
           <SideFilterbar/>
 
           {/* Main Content */}
-          <main className="flex-1 bg-gray-50">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-lg font-semibold">781 People Found</div>
-            </div>
-
-            {/* Table */}
-            <div className="overflow-x-auto bg-white rounded-lg shadow">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-100 text-gray-600 text-xs uppercase">
-                  <tr>
-                    <th className="p-3 text-left">Name</th>
-                    <th className="p-3 text-left">Company</th>
-                    <th className="p-3 text-left">Job Title</th>
-                    <th className="p-3 text-left">Location</th>
-                    <th className="p-3 text-left">Email</th>
-                    <th className="p-3 text-left">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm text-gray-700">
-                  {Array.from({ length: 10 }).map((_, idx) => (
-                    <tr key={idx} className="border-b">
-                      <td className="p-3 flex items-center gap-2">
-                        <div className="w-5 h-5 bg-red-500 rounded-full" />
-                        Nathan Mellor
-                      </td>
-                      <td className="p-3">Starta Leadership</td>
-                      <td className="p-3">Chief Executive Officer</td>
-                      <td className="p-3">San Francisco</td>
-                      <td className="p-3">
-                        <span
-                          className={`px-2 py-1 rounded text-white text-xs ${
-                            idx % 3 === 0 ? "bg-red-500" : "bg-green-500"
-                          }`}
-                        >
-                          Access email
-                        </span>
-                      </td>
-                      <td className="p-3">
-                        <button className="text-blue-600 hover:underline">Add to Lead</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </main>
+          <MainContent />
         </div>
       </div>
     </div>

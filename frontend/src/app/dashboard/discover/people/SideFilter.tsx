@@ -107,11 +107,11 @@ export default function SideFilterbar() {
     };
 
     return (
-        <aside className="w-64 bg-white">
+        <aside className="w-64 bg-white border border-gray-200">
             {filters.map((label) => (
-                <div key={label} className="border-b last:border-0 border-gray-300 ">
+                <div key={label} className="border-b last:border-0 border-gray-200 ">
                     <div
-                        className="flex justify-between items-center py-2 cursor-pointer hover:bg-gray-50 px-6 py-3"
+                        className="flex justify-between items-center cursor-pointer hover:bg-gray-50 px-6 py-3"
                         onClick={() => toggle(label)}
                     >
                         <div className="flex items-center gap-2 text-sm font-medium text-gray-800">
