@@ -75,7 +75,7 @@ export default function Dashboard(){
 
                 {/* Pages for main menu */}
                 {selectedMenu === "Dashboard" && <DashboardMenu collapsed={collapsed} setCollapsed={setCollapsed} />}
-                {selectedMenu === "Lead Scraper" && <LeadScraperPage />}
+                {selectedMenu === "Lead Scraper" && <LeadScraperPage collapsed={collapsed} setCollapsed={setCollapsed} />}
                 {selectedMenu === "Email Finder" && <EmailFinderPage/>}
                 {selectedMenu === "Updates" && <UpdatesPage/>}
                 {selectedMenu === "Integration" && <IntegrationPage/>}

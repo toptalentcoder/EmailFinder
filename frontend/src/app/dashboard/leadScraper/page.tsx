@@ -1,63 +1,204 @@
-// app/lead-scraper/page.tsx (or your route file)
 "use client";
 
 import { useState } from "react";
-import { DownloadIcon, SearchIcon } from "lucide-react";
+import { FaDownload, FaSearch } from "react-icons/fa";
+import { FiFilter } from "react-icons/fi";
+import { TbLayoutSidebarLeftCollapseFilled } from "react-icons/tb";
+import { TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
+import LeadScraperPage from './page';
 
-export default function LeadScraperPage() {
+const activities = ["Accounting Firm"];
+const countries = ["United states"];
+const divisions1 = ["New York"];
+const divisions2 = ["Queens County"];
+const cities = ["Queens"];
+
+const results = [
+  {
+    name: "Jw accounting",
+    city: "Queens",
+    phone: "(718) 672-2270",
+    map: true,
+    website: "Jw-accounting.com",
+    email: "No email found",
+    socials: { link: true, facebook: true, x: true },
+  },
+  {
+    name: "NASH-BEREIT",
+    city: "Queens",
+    phone: "+34 658 60 37 66",
+    map: false,
+    website: "-",
+    email: "-",
+    socials: { link: true, facebook: true, x: true },
+  },
+  {
+    name: "H&R Block",
+    city: "Queens",
+    phone: "(718) 225-8409",
+    map: true,
+    website: "hrblock.com",
+    email: "-",
+    socials: { link: true, facebook: true, x: true },
+  },
+  {
+    name: "Lead The Way Bookkeeping",
+    city: "Queens",
+    phone: "+34 658 60 37 66",
+    map: true,
+    website: "bookkeeping.com",
+    email: "admin@bookkeeping.com",
+    socials: { link: true, facebook: true, x: true },
+  },
+];
+
+export default function LeadScraperPage({
+    collapsed,
+    setCollapsed,
+}: {
+    collapsed: boolean;
+    setCollapsed: (val: boolean) => void;
+}) {
+  const [activity, setActivity] = useState("");
+  const [country, setCountry] = useState("");
+  const [level1, setLevel1] = useState("");
+  const [level2, setLevel2] = useState("");
+  const [city, setCity] = useState("");
+
   return (
-    <div className="flex">
-      <div className="flex-1 bg-white p-6 relative min-h-screen rounded-xl mt-[6px]">
-        {/* Top bar */}
-        <div className="top-4 left-4 flex items-center gap-2">
-          <div className="w-4 h-4 bg-[#22272B] rounded" />
-          <span className="text-base font-medium text-[#1D2125]">Lead Scraper</span>
+    <div className="p-6 text-gray-800">
+      <div className="flex items-center justify-between mb-4">
+            {/* Header with Collapse Button */}
+            <div className="flex items-center mb-4">
+                {collapsed ? (
+                    <TbLayoutSidebarRightCollapseFilled
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={() => setCollapsed(false)}
+                    />
+                ) : (
+                    <TbLayoutSidebarLeftCollapseFilled
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={() => setCollapsed(true)}
+                    />
+                )}
+                <h1 className="text-2xl font-semibold ml-2">Lead Scraper</h1>
+            </div>
+        <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2">
+          <FaDownload /> My Export
+        </button>
+      </div>
+
+      <div className="bg-gray-100 p-0.5 rounded-xl shadow">
+        <div className="px-4 py-2">
+          <h2 className="text-md font-semibold mb-2">Scrap Search</h2>
         </div>
+        <div className="grid grid-cols-6 gap-4 bg-white p-5 rounded-xl">
+          <div>
+            <div className="text-sm py-1">Activity</div>
+            <select className="text-sm p-2 rounded border">
+              <option>search activity</option>
+              {activities.map((a) => (
+                <option key={a}>{a}</option>
+              ))}
+            </select>
+          </div>
 
-        {/* Export Button */}
-        <div className="top-2 right-4">
-          <button className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-b from-[#0069FF] to-[#0457F2] border border-[#3053F2] rounded-md shadow-sm">
-            <DownloadIcon size={14} strokeWidth={1.5} />
-            My Export
-          </button>
-        </div>
+          <div>
+            <div className="text-sm py-1">Country</div>
+            <select className="text-sm p-2 rounded border">
+              <option>search country</option>
+              {countries.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+          </div>
 
-        {/* Scrap Search Box */}
-        <div className="top-[62px] left-1/2 transform -translate-x-1/2 w-[1159px] bg-[#F8F8F8] rounded-lg p-4 shadow-sm">
-          <span className="text-sm font-medium text-[#1D2125] mb-2 block">Scrap Search</span>
+          <div>
+            <div className="text-sm py-1">Level 1 Division</div>
+            <select className="text-sm p-2 rounded border">
+              <option>search level 1</option>
+              {divisions1.map((l) => (
+                <option key={l}>{l}</option>
+              ))}
+            </select>
+          </div>
 
-          <div className="mt-4 bg-white p-4 rounded-md shadow-md flex gap-3 flex-wrap">
-            <Dropdown label="Activity" placeholder="search activity" width="w-[245px]" />
-            <Dropdown label="Country" placeholder="search country" width="w-[203px]" />
-            <Dropdown label="Level 1 Division" placeholder="search level 1" width="w-[186px]" />
-            <Dropdown label="Level 2 Division" placeholder="search level 2" width="w-[184px]" />
-            <Dropdown label="City" placeholder="search city" width="w-[176px]" />
-            <button className="flex items-center gap-2 px-3 py-2 bg-white border border-[#EBEBEB] shadow-sm text-sm font-medium rounded-md">
-              <SearchIcon size={16} className="text-[#22272B]" />
-              Search
+          <div>
+            <div className="text-sm py-1">Level 2 Division</div>
+            <select className="text-sm p-2 rounded border">
+              <option>search level 2</option>
+              {divisions2.map((l) => (
+                <option key={l}>{l}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <div className="text-sm py-1">City</div>
+            <select className="text-sm p-2 rounded border">
+              <option>search city</option>
+              {cities.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <div className="text-sm py-1 invisible">Search</div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2">
+              <FaSearch /> Search
             </button>
           </div>
+
         </div>
       </div>
-    </div>
-  );
-}
 
-function Dropdown({ label, placeholder, width }: { label: string; placeholder: string; width: string }) {
-  return (
-    <div className={`flex flex-col gap-1 ${width}`}>
-      <label className="text-xs font-medium text-[#1D2125]">{label}</label>
-      <div className="flex items-center justify-between px-3 py-2 bg-[#F8F8F8] border border-[#EBEBEB] rounded-md text-xs font-medium text-[#888888]">
-        {placeholder}
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path
-            d="M3 4.5L6 7.5L9 4.5"
-            stroke="#898B8D"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+      <div className="mt-4">
+        <p className="text-sm text-gray-600 mb-2">4 Result Found</p>
+        <div className="overflow-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="p-2">Name</th>
+                <th className="p-2">City</th>
+                <th className="p-2">Phone</th>
+                <th className="p-2">Google Map Data</th>
+                <th className="p-2">Website</th>
+                <th className="p-2">Email</th>
+                <th className="p-2">Website Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((r, idx) => (
+                <tr key={idx} className="border-t">
+                  <td className="p-2">{r.name}</td>
+                  <td className="p-2">{r.city}</td>
+                  <td className="p-2">{r.phone}</td>
+                  <td className="p-2">{r.map ? "⭐ 👁️ 📍" : "⛔ ⛔ ⛔"}</td>
+                  <td className="p-2">{r.website}</td>
+                  <td className="p-2">{r.email}</td>
+                  <td className="p-2">{r.socials.link ? "📄" : ""} {r.socials.facebook ? "📘" : ""} {r.socials.x ? "❌" : ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex items-center gap-2">
+            <button className="text-sm border px-3 py-1 rounded">‹ Previous</button>
+            <span className="text-sm">1</span>
+            <span className="text-sm">2</span>
+            <span className="text-sm text-gray-400">…</span>
+            <button className="text-sm border px-3 py-1 rounded">Next ›</button>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="text-sm border px-3 py-1 rounded flex items-center gap-1">
+              <FiFilter /> Filter
+            </button>
+            <button className="text-sm border px-3 py-1 rounded">Export CSV</button>
+          </div>
+        </div>
       </div>
     </div>
   );
