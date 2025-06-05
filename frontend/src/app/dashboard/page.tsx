@@ -57,7 +57,14 @@ export default function Dashboard(){
                     />
                 )}
 
-                {selectedSubmenu === "Companies" && <CompaniesPage/>}
+                {selectedSubmenu === "Companies" && (
+                    <CompaniesPage
+                        togglePanel={() =>
+                        setActivePanel(activePanel ? null : selectedMenu) // 💡 toggle only panel
+                        }
+                    />
+                )}
+
                 {selectedSubmenu === "LeadsCompanies" && <LeadsCompaniesPage/>}
                 {selectedSubmenu === "All People" && <AllpeoplePage/>}
                 {selectedSubmenu === "Import from Companies" && <ImportFromCompaniesPage/>}
