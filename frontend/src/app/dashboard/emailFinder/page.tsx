@@ -16,8 +16,8 @@ export default function EmailFinderPage({
     const [activeTab, setActiveTab] = useState<"company" | "name">("company");
 
     return (
-        <div className="flex p-6">
-            <div className="flex-1 bg-white text-gray-800">
+        <div className="flex max-h-screen overflow-y-auto">
+            <div className="flex-1 bg-white text-gray-800 p-6">
 
                 <div className="flex items-center justify-between">
                     {/* Header with Collapse Button */}
