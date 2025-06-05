@@ -10,12 +10,9 @@ import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import SideFilterbar from "./SideFilter";
 import MainContent from "./MainContent";
+import { TooglePageProps } from "@/types/TooglePageProps";
 
-interface PeoplePageProps {
-  togglePanel: () => void;
-}
-
-export default function PeoplePage({ togglePanel }: PeoplePageProps) {
+export default function PeoplePage({ togglePanel }: TooglePageProps) {
 
   const [collapsed, setCollapsed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
