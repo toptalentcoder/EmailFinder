@@ -67,20 +67,20 @@ export default function PeoplePage({ togglePanel }: PeoplePageProps) {
                                 className="[--anchor-gap:8px] [--anchor-padding:8px] rounded-lg bg-white shadow-2xl z-50 border border-gray-200 min-w-96"
                             >
                                 <MenuItem>
-                                <div className="text-gray-800 px-4 py-1 hover:bg-gray-100 cursor-pointer">Saved Searches</div>
-                                </MenuItem>
-                                <MenuItem>
-                                <div className="flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-pointer">
-                                    <CgViewComfortable className="w-5 h-5 text-gray-500" />
-                                    <span className="text-gray-800">Default View</span>
-                                    <div className="bg-gray-400 rounded-2xl px-2 py-0.5">System</div>
-                                </div>
+                                    <div className="text-gray-800 px-4 py-1 hover:bg-gray-100 cursor-pointer">Saved Searches</div>
                                 </MenuItem>
                                 <MenuItem>
                                     <div className="flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-pointer">
-                                    <CgViewComfortable className="w-5 h-5 text-gray-500" />
-                                    <span className="text-gray-800">Great Leads</span>
-                                </div>
+                                        <CgViewComfortable className="w-5 h-5 text-gray-500" />
+                                        <span className="text-gray-800">Default View</span>
+                                        <div className="bg-gray-400 rounded-2xl px-2 py-0.5">System</div>
+                                    </div>
+                                </MenuItem>
+                                <MenuItem>
+                                    <div className="flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                                        <CgViewComfortable className="w-5 h-5 text-gray-500" />
+                                        <span className="text-gray-800">Great Leads</span>
+                                    </div>
                                 </MenuItem>
                             </MenuItems>
                         </Menu>

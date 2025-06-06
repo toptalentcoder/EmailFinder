@@ -69,7 +69,13 @@ export default function Dashboard(){
                 {selectedSubmenu === "All People" && <AllpeoplePage/>}
                 {selectedSubmenu === "Import from Companies" && <ImportFromCompaniesPage/>}
                 {selectedSubmenu === "Josie’s Leads" && <JosiesLeadsPage/>}
-                {selectedSubmenu === "Single Verification" && <SingleVerificationPage/>}
+                {selectedSubmenu === "Single Verification" && (
+                    <SingleVerificationPage
+                        togglePanel={() =>
+                        setActivePanel(activePanel ? null : selectedMenu) // 💡 toggle only panel
+                        }
+                    />
+                )}
                 {selectedSubmenu === "Bulk Verification" && <BulkVerificationPage/>}
                 {selectedSubmenu === "Campaigns" && <CampaignsPage/>}
                 {selectedSubmenu === "Inbox" && <InboxPage/>}
