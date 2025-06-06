@@ -198,7 +198,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
             )}
 
             {activePanel === "Email Verifier" && (
-                <div className="text-gray-800 top-0 h-screen w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
+                <div className="text-gray-800 top-0 min-h-screen w-52 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10">
                     <h2 className="text-lg font-semibold mb-4">Email Verifier</h2>
                     <div className="space-y-2">
                         <button
@@ -230,7 +230,7 @@ export default function Sidebar({selectedMenu, setSelectedMenu, selectedSubmenu,
             )}
 
             {activePanel === "Leads" && (
-                <div className="top- text-gray-800 h-screen w-64 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10 overflow-y-auto">
+                <div className="top- text-gray-800 min-h-screen w-64 bg-[#F8F8F8] shadow-md rounded-tr-xl rounded-br-xl p-4 z-10 overflow-y-auto">
                     <h2 className="text-lg font-semibold mb-4">Leads</h2>
 
                     {/* Companies Section */}
