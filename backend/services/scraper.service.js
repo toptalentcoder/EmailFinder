@@ -77,7 +77,34 @@ async function findContactInfoByNameAndDomain(firstName, lastName, domain) {
   return enrichedContacts;
 }
 
-module.exports = { findEmailsByDomain, findContactInfoByNameAndDomain };
+async function searchProspects({ activity, country, level1, level2, city, page = 1 }) {
+  const token = await getSnovToken();
+
+  const query = `${activity}, ${city}, ${level2}, ${level1}, ${country}`;
+
+  const res = await axios.get('https://api.snov.io/v1/get-prospects-by-job', {
+    headers: { Authorization: `Bearer ${token}` },
+    params: {
+      job_titles: [activity],
+      country,
+      city,
+      limit: 10,
+      page
+    },
+  });
+
+  return res.data.prospects.map(p => ({
+    name: `${p.firstName} ${p.lastName}`,
+    position: p.jobTitle,
+    email: p.email,
+    company: p.company,
+    domain: p.domain,
+    linkedin: p.linkedin,
+    location: p.location,
+  }));
+}
+
+module.exports = { findEmailsByDomain, findContactInfoByNameAndDomain, searchProspects };
 
 // /**
 //  * Search companies using Bing instead of Google to avoid CAPTCHA blocks.

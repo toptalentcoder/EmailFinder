@@ -22,5 +22,6 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/domain', require('./routes/domain.routes'));
+app.use('/api/lead', require('./routes/lead.routes'));
 
 module.exports = app;
